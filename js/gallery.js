@@ -104,7 +104,6 @@ container.addEventListener("click", event => {
       function handleEscape(event) {
     if (event.key === "Escape") {
       modal.close();
-      console.log("working");
       document.removeEventListener('keydown', handleEscape);
     }
   }
