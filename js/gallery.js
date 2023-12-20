@@ -69,12 +69,12 @@ const container = document.querySelector(".gallery")
 
 container.innerHTML = images.reduce((htmlCode, image) => htmlCode + `
 <li class="gallery-item">
-  <a class="gallery-link" href="large-image.jpg">
+  <a class="gallery-link" href="${image.original}">
     <img
       class="gallery-image"
-      src= ${image.preview}
-      data-source= ${image.original}
-      alt=${images.description}
+      src= "${image.preview}"
+      data-source= "${image.original}"
+      alt="${images.description}"
     />
   </a>
 </li>`, "");
@@ -95,22 +95,20 @@ container.addEventListener("click", event => {
         if (!image) return;
         const modal = basicLightbox.create(`<img
       class="gallery-image"
-      src= ${image.original}
-      alt=${images.description}
+      src= "${image.original}"
+      alt="${images.description}"
     />
         `)
 
-        modal.show()       
-        if (modal.show()) {
-  function handleEscape(event) {
+      modal.show()    
+      function handleEscape(event) {
     if (event.key === "Escape") {
       modal.close();
-      container.removeEventListener('keydown', handleEscape);
+      console.log("working");
+      document.removeEventListener('keydown', handleEscape);
     }
   }
-
-  container.addEventListener('keydown', handleEscape);
-}
+  document.addEventListener('keydown', handleEscape);
     }
 
 })
