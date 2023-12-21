@@ -64,51 +64,49 @@ const images = [
   },
 ];
 const container = document.querySelector(".gallery")
+const modal = basicLightbox.create(`
+<img class="gallery-image-original" src="" alt=""/>
+        `, {
+        onShow: () => {
+          document.addEventListener('keydown', handleEscape);
+        },
+        onClose: () => {
+          document.removeEventListener('keydown', handleEscape);
+        },
+      }
+      );
+      function handleEscape(event) {
+    if (event.key === "Escape") {
+      modal.close();  
+    }
+      }
 
-
-
-container.innerHTML = images.reduce((htmlCode, image) => htmlCode + `
+container.innerHTML = images.reduce((html, image) => html + `
 <li class="gallery-item">
   <a class="gallery-link" href="${image.original}">
     <img
       class="gallery-image"
       src= "${image.preview}"
       data-source= "${image.original}"
-      alt="${images.description}"
+      alt="${image.description}"
     />
   </a>
 </li>`, "");
 
-const links = document.querySelectorAll(".gallery-link")
+const links = document.querySelectorAll(".gallery")
 links.forEach(link => {
     link.addEventListener("click", event => {
         event.preventDefault()
     });
-    
 });
 
 container.addEventListener("click", event => {
-    const imageModal = event.target.dataset.source;
-    if (imageModal) {
-        const image = images.find(image => image.original.toString() === imageModal);
 
-        if (!image) return;
-        const modal = basicLightbox.create(`<img
-      class="gallery-image"
-      src= "${image.original}"
-      alt="${images.description}"
-    />
-        `)
+  if (event.target.nodeName !== "IMG") { return; }
 
-      modal.show()    
-      function handleEscape(event) {
-    if (event.key === "Escape") {
-      modal.close();
-      document.removeEventListener('keydown', handleEscape);
-    }
-  }
-  document.addEventListener('keydown', handleEscape);
-    }
+  const img = modal.element().querySelector(".gallery-image-original")
+  img.src = event.target.dataset.source;
+  modal.show()
+});
 
-})
 
