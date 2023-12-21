@@ -64,6 +64,7 @@ const images = [
   },
 ];
 const container = document.querySelector(".gallery")
+// Create modal
 const modal = basicLightbox.create(`
 <img class="gallery-image-original" src="" alt=""/>
         `, {
@@ -74,13 +75,14 @@ const modal = basicLightbox.create(`
           document.removeEventListener('keydown', handleEscape);
         },
       }
-      );
+);
+      // Modal close
       function handleEscape(event) {
     if (event.key === "Escape") {
       modal.close();  
     }
       }
-
+// Create markup
 container.innerHTML = images.reduce((html, image) => html + `
 <li class="gallery-item">
   <a class="gallery-link" href="${image.original}">
@@ -92,14 +94,14 @@ container.innerHTML = images.reduce((html, image) => html + `
     />
   </a>
 </li>`, "");
-
-const links = document.querySelectorAll(".gallery")
+// Default behavior when clicking on a photo
+const links = document.querySelectorAll(".gallery-link")
 links.forEach(link => {
     link.addEventListener("click", event => {
         event.preventDefault()
     });
 });
-
+// MODAL OPEN
 container.addEventListener("click", event => {
 
   if (event.target.nodeName !== "IMG") { return; }
