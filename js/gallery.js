@@ -95,15 +95,10 @@ container.innerHTML = images.reduce((html, image) => html + `
   </a>
 </li>`, "");
 // Default behavior when clicking on a photo
-const links = document.querySelectorAll(".gallery-link")
-links.forEach(link => {
-    link.addEventListener("click", event => {
-        event.preventDefault()
-    });
-});
+
 // MODAL OPEN
 container.addEventListener("click", event => {
-
+event.preventDefault()
   if (event.target.nodeName !== "IMG") { return; }
 
   const img = modal.element().querySelector(".gallery-image-original")
